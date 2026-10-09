@@ -29,6 +29,8 @@ const healthPlugin: Plugin = {
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
+    // Sub-page routing under the unified Netlify build (see ../HUB_ARCHITECTURE.md).
+    base: '/soc-sys/',
     plugins: [react(), tailwindcss(), healthPlugin],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
