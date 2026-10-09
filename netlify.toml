@@ -1,0 +1,31 @@
+# Netlify configuration for SOC-sys Dashboard.
+#
+# The official Netlify GitHub App integration (connect the repo in the
+# Netlify dashboard) auto-discovers this file on push to main and runs the
+# build. The GitHub Actions release workflow (.github/workflows/release.yml)
+# handles GitHub Release creation; it does NOT call the Netlify API.
+
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  BUN_VERSION = "1.1"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
